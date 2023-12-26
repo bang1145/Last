@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.PartnerDao">
+	
+	<!-- 파트너 모집 글쓰기 -->
+	<insert id="insertPartner">
+		insert into partner 
+			(pId, pTitle, pContent, username, personnel, progress, stack, pPosition, pContact, startDate, expectDate)
+		values 
+			(seq_partner.nextval,#{pTitle}, #{pContent}, #{username}, #{personnel}, #{progress}, #{stack}, #{pPosition}
+			, #{pContact}, #{startDate}, #{expectDate})
+	</insert>
+	
+	<!-- 파트너 게시글 읽기 -->
+	<select id="readPartner" resultType="PartnerDto">
+		select * from partner where pId = #{pId}
+	</select>
+	
+	<!-- 파트너 글 수정 -->
+	<update id="updatePartner">
+		update partner set 
+			pTitle=#{pTitle}, pContent=#{pContent}, personnel=#{personnel}, progress=#{progress}, stack=#{stack}
+			, pPosition=#{pPosition}, pContact=#{pContact}, startDate=#{startDate}
+		where pId=#{pId} 
+	</update>
+	
+	<delete id="deletePartner"> delete from partner where pId = #{pId} </delete>
+	
+	<!-- 전체 게시글 list -->
+	<select id="listPartner" resultType="com.human.dto.PartnerDto">
+		<![CDATA[ select * from partner where pId > 0 order by pId desc]]>
+	</select>
+	
+	<!-- 조회수 -->
+	<update id="partnerViewCount">
+		update partner set pHit = pHit + 1 where pId = #{pId}
+	</update>
+	
+
+</mapper>

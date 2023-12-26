@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.UBoardDao">
+
+	<insert id="create">
+		insert into unknown
+		(id, uTitle, uContent, uName, uGroup)
+		values
+		(uboard.nextval, #{uTitle}, #{uContent}, #{uName}, uboard.nextval)
+	</insert>
+
+	<!-- 답글 작성 -->
+	<!-- update 된 다음에 insert가 돼야함 -->
+	<update id="replyStep">
+		update unknown set uStep=uStep+1 where
+		uGroup=#{uGroup}
+		and uStep>#{uStep}
+	</update>
+
+	<insert id="replyCreate">
+		insert into unknown
+		(id, uName, uTitle, uContent,
+		uGroup, uStep, uIndent)
+		values
+		(uboard.nextval, #{uName}, #{uTitle},
+		#{uContent},
+		(select uGroup from unknown where id=#{id}), #{uStep},
+		#{uIndent})
+	</insert>
+	<!-- 답글 달기 전 부모의 step보다 높은 글들의 step 하나씩 증가시킴(중간에 답글을 삽입하기 위함) -->
+
+	<select id="read" resultType="UBoardDto">
+		select * from unknown where id = #{id}
+	</select>
+
+	<update id="update">
+		update unknown set
+		uTitle = #{uTitle}, uContent =
+		#{uContent}, uUpdateTime = #{uUpdateTime}
+		where id = #{id}
+	</update>
+
+	<delete id="delete"> delete from unknown where id = #{id} </delete>
+
+	<select id="listAll" resultType="com.human.dto.UBoardDto">
+		<![CDATA[ select * from unknown where id > 0 order by uGroup desc, uStep asc ]]>
+	</select>
+
+	<update id="increaseViewCount">
+		update unknown set uHit = uHit + 1 where id = #{id}
+	</update>
+
+	<update id="uLike">
+		update unknown set uLike = uLike + 1 where id = #{id}
+	</update>
+
+	<select id="listMenu" resultType="com.human.dto.UBoardDto">
+		<![CDATA[ select * from unknown where uGroupKind = #{uGroupKind} order by uGroup desc, uStep asc]]>
+	</select>
+
+	<select id="countBoard" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM unknown WHERE uGroupKind = #{uGroupKind}
+	</select>
+
+	<!-- <select id="menuKind" resultType="String"> -->
+	<!-- <![CDATA[ select distinct uGroupKind from unknown order by uGroupKind 
+		]]> -->
+	<!-- </select> -->
+
+	<!-- 검색 -->
+	<sql id='search'>
+		<if test="searchType!=null">
+			<if test="searchType == '제목'.toString()"> and uTitle like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '내용'.toString()"> and uContent like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '작성자'.toString()"> and uName like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '제목 +내용'.toString()"> and ( uTitle like '%'|| #{keyword}||'%' OR uContent like
+				'%'|| #{keyword}||'%') </if>
+			<if test="searchType == '내용+작성자'.toString()"> and ( uContent like '%'|| #{keyword}||'%' OR uName like
+				'%'|| #{keyword}||'%') </if>
+			<if test="searchType == '전체'.toString()"> and ( uTitle like '%'|| #{keyword}||'%' OR uContent like
+				'%'|| #{keyword}||'%' OR uName like '%'|| #{keyword}||'%') </if>
+		</if>
+	</sql>
+	<!-- 페이징서치 pageList -->
+	<select id="listSearch" resultType="UBoardDto">
+   <![CDATA[select * from unknown where 1=1 ]]>
+		<include refid="search" />
+   <![CDATA[
+      and uDelete='Y' 
+      order by uGroup desc, uStep asc 
+      offset (#{page}-1)*#{perPageNum} rows fetch next #{perPageNum} rows only
+   ]]>
+	</select>
+
+	<select id="listSearchCount" resultType="int">
+    <![CDATA[ select count(id) from unknown where 1=1 ]]>
+		<include refid="search" />
+    <![CDATA[and uDelete='Y']]>
+	</select>
+
+	<!-- 카테고리 페이징 처리 cateList -->
+	<select id="uGroupKindSearch" resultType="UBoardDto">
+	<![CDATA[select * from unknown where 1=1 ]]>
+		<include refid="search" />
+	<![CDATA[
+		and uGroupKind = #{uGroupKind} 
+      	and uDelete='Y' 
+      	order by uGroup desc, uStep asc 
+      	offset (#{page}-1)*#{perPageNum} rows fetch next #{perPageNum} rows only
+	]]>
+	</select>
+
+	<select id="uGroupKindSearchCount" resultType="int">
+    <![CDATA[ select count(id) from unknown where 1=1 ]]>
+		<include refid="search" />
+    <![CDATA[and uGroupKind = #{uGroupKind} and uDelete='Y']]>
+	</select>
+
+	<select id="category" resultType="String">
+		select distinct uGroupKind from unknown
+	</select>
+</mapper>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.human.dao.UBoardUploadDao">
+	<select id="getFiles" resultType="string">
+		select fullname from attach where id = #{id} order by regdate
+	</select>
+	<delete id="deleteFile">
+		delete from attach where fullName = #{fullName}
+	</delete>
+	<delete id="deleteFileAll">
+		delete from attach where id = #{id}
+	</delete>
+	<insert id="addFile">
+		insert into attach(fullname, id) values (#{fullName}, #{id})
+	</insert>
+</mapper>

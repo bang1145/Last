@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.AuthoritiesDao">
+
+<insert id="insert">
+insert into authorities(username,authority) values(#{username},#{authority}) 
+</insert>
+
+<select id="selectAll" resultType="AuthoritiesDto">
+select * from authorities
+</select>
+
+<select id="selectName" resultType="AuthoritiesDto">
+select * from authorities where username=#{username}
+</select>
+
+<update id="update">
+update authorities set username=#{username},authority=#{authority} where username=#{username}
+</update>
+
+<delete id="delete">
+delete authorities where username=#{username}
+</delete>
+</mapper>

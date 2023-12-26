@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.HireDao">
+
+	<insert id="create">insert into hire (hId, hName, hTitle, hContent, career, education,
+	salary, location, startDate, writeDate, endDate)
+		values (hId.nextval,#{hName},#{hTitle},#{hContent},#{career},
+		#{education}, #{salary},#{location},#{startDate},#{writeDate},#{endDate})
+	</insert>
+
+
+	<select id="read" resultType="HireDto">
+		select * from hire where hId =
+		#{hId}
+	</select>
+
+
+	<update id="update">  <!-- 안고침 -->
+		update hire set
+		bGroupKind=#{bGroupKind},bTitle=#{bTitle},bContent=#{bContent}, bUpdateTime=#{bUpdateTime}
+		where hId=#{hId}
+	</update>
+
+	<delete id="delete"> delete from hire where hId = #{hId} </delete>
+
+	<select id="listAll" resultType="com.human.dto.HireDto">
+		<![CDATA[ select * from hire where hId > 0 order by hId desc ]]>
+	</select>
+
+	<update id="increaseViewCount">
+		update hire set hHit = hHit + 1 where hId = #{hId}
+	</update>
+
+	<update id="hLike">
+		update hire set hLike = hLike + 1 where hId = #{hId}
+	</update>
+
+	<select id="listMenu" resultType="com.human.dto.HireDto">
+		<![CDATA[ select * from hire where hGroupKind = #{hGroupKind} order by hGroup desc, hStep asc]]>
+		
+	</select> 
+	
+	<select id="countBoard" parameterType="String" resultType="int">
+  		SELECT COUNT(*) FROM hire WHERE hGroupKind = #{hGroupKind}
+	</select>
+
+	<select id="menuKind" resultType="String">
+   		<![CDATA[ select distinct hGroupKind from hire order by hGroupKind ]]>
+	</select>
+<!-- 검색 -->
+	<sql id='search'>
+		<if test="searchType!=null">
+			<if test="searchType == '게시판'.toString()"> and bGroupKind like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '제목'.toString()"> and bTitle like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '내용'.toString()"> and bContent like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '작성자'.toString()"> and bName like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '제목 +내용'.toString()"> and ( bTitle like '%'|| #{keyword}||'%' OR bContent like
+				'%'|| #{keyword}||'%') </if>
+			<if test="searchType == '내용+작성자'.toString()"> and ( bContent like '%'|| #{keyword}||'%' OR bName like
+				'%'|| #{keyword}||'%') </if>
+			<if test="searchType == '제목+내용+작성자'.toString()"> and ( bTitle like '%'|| #{keyword}||'%' OR bContent like
+				'%'|| #{keyword}||'%' OR bName like '%'|| #{keyword}||'%') </if>
+		</if>
+	</sql>
+	<!-- 페이징서치 pageList -->
+<select id="listSearch" resultType="HireDto">
+   <![CDATA[select * from hire where 1=1 ]]>
+   <include refid="search"/>
+   <![CDATA[
+      and hDelete='Y' 
+      order by hGroup desc, hStep asc 
+      offset (#{page}-1)*#{perPageNum} rows fetch next #{perPageNum} rows only
+   ]]>
+</select>
+
+	
+<!-- <select id="listSearch" resultType="com.human.dto.BoardDto"> -->
+<!-- 	<![CDATA[SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER ( and bDelete='N' ORDER by bGroup desc,bStep asc) AS rn FROM board WHERE 1=1]]> -->
+<!--  include 는 refid 옆에 입력한 search를 찾아간다 위에 sql id='search'로 찾아간다. 이거 주석임 -->
+<!--       <include refid="search" /> -->
+<!-- 	<![CDATA[ -->
+	
+<!-- 	 )WHERE rn BETWEEN ((#{page} - 1) * #{perPageNum}) + 1 AND #{page}* #{perPageNum}]]> -->
+<!--   </select> -->
+
+
+  <select id="listSearchCount" resultType="int">
+    <![CDATA[ select count(hId) from hire where 1=1 ]]>
+      <include refid="search" />
+    <![CDATA[and hDelete='Y']]>
+  </select>
+
+
+<!-- 카테고리 페이징 처리 cateList -->	
+<select id="hGroupKindSearch" resultType="HireDto">
+  <![CDATA[select * from hire where 1=1 ]]>
+   <include refid="search"/>
+   <![CDATA[
+      and hGroupKind=#{hGroupKind} 
+      and hDelete='Y' 
+      order by hGroup desc, hStep asc 
+      offset (#{page}-1)*#{perPageNum} rows fetch next #{perPageNum} rows only
+   ]]>
+</select>
+
+  <select id="hGroupKindSearchCount" resultType="int">
+    <![CDATA[ select count(hId) from hire where 1=1 ]]>
+      <include refid="search" />
+    <![CDATA[and hGroupKind=#{hGroupKind} and hDelete='Y']]>
+  </select>
+
+<select id="category" resultType="String">
+select distinct hGroupKind from hire
+</select>
+</mapper>

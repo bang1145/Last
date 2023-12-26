@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.human.dao.UReplyDao">
+
+	<select id="list" resultType="UReplyDto">
+		select * from ureply
+		where id = #{id}
+		order by rGroup desc, rStep asc
+	</select>
+
+	<select id="read" resultType="UReplyDto">
+		select * from ureply where urId = #{urId} 
+		order by rGroup desc, rStep asc
+	</select>
+
+	<!-- 댓글 -->
+	<insert id="insert">
+		insert into ureply (urId, id, rPw, replytext, replyer, rGroup)
+		values (reply.nextval, #{id}, #{rPw}, #{replytext}, #{replyer}, reply.nextval)
+	</insert>
+
+	<!-- 대댓글 -->
+	<insert id="createReply">
+		insert into ureply (rGroup, urId, id, rPw, replytext, replyer, rStep, rIndent)
+		values
+		((select rGroup from ureply where urId=#{urId}), reply.nextval, #{id}, #{rPw},
+		#{replytext}, #{replyer}, #{rStep}, #{rIndent})
+	</insert>
+	
+	<!-- 답글 달기 전 부모의 step보다 높은 글들의 step 하나씩 증가시킴(중간에 답글을 삽입하기 위함) -->
+	<update id="stepReply">
+		update ureply set rStep = rStep+1 where rGroup = #{rGroup}
+		and rStep>#{rStep}
+	</update>
+
+	<update id="update">
+		update ureply set replytext = #{replytext},
+		updatedate = sysdate
+		where urId = #{urId}
+		and rPw = #{rPw}
+	</update>
+
+	<delete id="delete">
+		delete from ureply 
+		where urId = #{urId}
+		and rPw = #{rPw}
+	</delete>
+	<delete id="deleteId">
+		delete from ureply where id =#{id}
+	</delete>
+
+	<!--댓글 정렬하는 부분이 여기임 -->
+	<select id="listPage" resultType="UReplyDto"> 
+   <![CDATA[
+		select * from ureply where 
+      	id = #{id} 
+      	order by rGroup asc, rStep asc 
+      	offset (#{pm.page}-1)*#{pm.perPageNum} rows fetch next #{pm.perPageNum} rows only
+   ]]>
+	</select>
+
+	<!-- 해당 글의 댓글 count -->
+	<select id="count" resultType="int">
+		<![CDATA[select count(urId) from ureply where id = #{id}]]>
+	</select>
+</mapper>

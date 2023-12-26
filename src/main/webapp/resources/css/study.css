@@ -1,0 +1,106 @@
+/* 파일업로드 */
+.fileDrop {
+	width: 100%;
+	height: 100px;
+    border: 2px dotted #ccc;
+    color: gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+small {
+	margin-left: 3px;
+	font-weight: bold;
+	color: gray;
+}
+
+/* 제목 */
+#title {
+    width: 100%;
+    border-radius: 10px; /* 둥근 모서리 추가 */
+    padding: 10px; /* 안쪽 여백 추가 */
+    border: 2px solid #ccc;
+}
+
+/* 작성자 */
+#writer {
+height: 30px;
+font-size:18px;
+resize:none;
+color:black;
+border:none;
+border-bottom:2px solid #ccc;
+outline:none;
+}
+
+/* 내용 */
+h4 textarea[name="sContent"] {
+    border-radius: 10px; /* 둥근 모서리 추가 */
+    padding: 10px; /* 안쪽 여백 추가 */
+    border: 2px solid #ccc;
+}
+
+/* 등록 목록 버튼 스타일 */
+.buttonContainer {
+  display: flex;
+  justify-content: flex-end; /* 오른쪽 정렬 */
+  margin-top: 20px; /* 원하는 여백을 지정하세요. */
+}
+
+.buttonContainer button {
+  padding: 0 1.25rem;
+  font-weight: 700;
+  font-size: 1rem;
+  background-color: #262626;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+
+}
+
+.buttonContainer button:hover {
+  background-color: #D2E8FF;
+  color: black;
+}
+
+.buttonContainer a {
+  text-decoration: none; /* a 태그의 기본 텍스트 밑줄 제거 */
+  color:white;
+}
+
+.buttonContainer a:hover {
+  color: black; /* a 태그 hover 시 텍스트 색상 변경 */
+}
+
+/* 카테고리 셀렉트박스 */
+#category {
+    width: 200px;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* studyListAll */
+/* 전체글보기 글쓰기 파일공유 피드백 스타일 */
+.side1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 20px;
+	color: gray;
+	font-weight: bold;
+	margin-top: 50px;
+}
+
+.side1 :hover {
+	color: black;
+}
+
+.side1 a {
+	margin-right: 10px; /* 각 링크 사이의 간격을 조절 */
+	color: gray; /* 링크 색상을 회색으로 설정 */
+	text-decoration: none; /* 링크 밑줄 제거 */
+}
+

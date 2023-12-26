@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.human.dao.StudyReplyDao">
+   <select id="list" resultType="StudyReplyDto">
+      select * from study_reply
+      where sId =#{sId}
+      order by sGroup desc, sStep asc
+   </select>
+   
+      <select id="read" resultType="StudyReplyDto">
+      select * from study_reply where sRId =
+      #{sRId} order by sGroup desc,sStep asc
+   </select>
+   
+   
+<!--    댓글 -->
+   <insert id="insert">
+      insert into study_reply (sRId, sId, sReplytext, sReplyer, sGroup)
+      values (seq_study_reply.nextval, #{sId},#{sReplytext},#{sReplyer},seq_study_reply.nextval)
+   </insert>
+   
+<!--    대댓글 -->
+<insert id="createReply">
+    insert into study_reply (sGroup, sRId, sId, sReplytext, sReplyer, sStep, sIndent)
+    values 
+    ((select sGroup from study_reply where sRId=#{sRId}), seq_study_reply.nextval, #{sId}, #{sReplytext}, #{sReplyer}, #{sStep}, #{sIndent})
+</insert>
+   <!-- 답글 달기 전 부모의 step보다 높은 글들의 step 하나씩 증가시킴(중간에 답글을 삽입하기 위함) -->
+   <update id="stepReply">
+      update study_reply set sStep=sStep+1 where sGroup=#{sGroup}
+      and sStep>#{sStep}
+   </update>
+
+   <update id="update">
+      update study_reply set sReplytext = #{sReplytext},
+      sUpdatedate = sysdate
+      where sRId = #{sRId}
+   </update>
+
+   <delete id="delete">
+      delete from study_reply where sRId =#{sRId}
+   </delete>
+   <delete id="deletesId">
+      delete from study_reply where sId =#{sId}
+   </delete>
+   
+   
+<!--댓글 정렬하는 부분이 여기임 -->
+<select id="listPage" resultType="StudyReplyDto"> 
+   <![CDATA[select * from study_reply where 
+      sId=#{sId} 
+      order by sGroup asc, sStep asc 
+      offset (#{spm.page}-1)*#{spm.perPageNum} rows fetch next #{spm.perPageNum} rows only
+   ]]>
+</select>
+
+
+ <!-- 해당 글의 댓글 count -->
+<select id="count" resultType="int">
+<![CDATA[select count(sRId) from study_reply where sId=#{sId}]]>
+</select>
+ 
+ 
+ <!-- 대대댓글 작성 -->
+
+<!-- <insert id="createReply"> -->
+<!--        insert into tbl_reply (rGroup,sRId, sId, replytext, replyer,  rStep, rIndent) -->
+<!--        values  -->
+<!--        ((select rGroup from tbl_reply where sRId=#{sRId}),seq_reply.nextval, #{sId}, #{replytext}, #{replyer},  -->
+<!--        #{rStep}, #{rIndent}) -->
+<!--    </insert> -->
+   
+</mapper>

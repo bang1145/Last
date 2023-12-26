@@ -1,0 +1,649 @@
+@charset "UTF-8";
+
+/**--------------------------------- BEGIN 로딩 CSS -------------------------------------- **/
+        body {background: white;}
+        @keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-moz-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-webkit-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-o-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-moz-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-webkit-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @-o-keyframes rotate-loading {
+            0%  {transform: rotate(0deg);-ms-transform: rotate(0deg); -webkit-transform: rotate(0deg); -o-transform: rotate(0deg); -moz-transform: rotate(0deg);}
+            100% {transform: rotate(360deg);-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -o-transform: rotate(360deg); -moz-transform: rotate(360deg);}
+        }
+
+        @keyframes loading-text-opacity {
+            0%  {opacity: 0}
+            20% {opacity: 0}
+            50% {opacity: 1}
+            100%{opacity: 0}
+        }
+
+        @-moz-keyframes loading-text-opacity {
+            0%  {opacity: 0}
+            20% {opacity: 0}
+            50% {opacity: 1}
+            100%{opacity: 0}
+        }
+
+        @-webkit-keyframes loading-text-opacity {
+            0%  {opacity: 0}
+            20% {opacity: 0}
+            50% {opacity: 1}
+            100%{opacity: 0}
+        }
+
+        @-o-keyframes loading-text-opacity {
+            0%  {opacity: 0}
+            20% {opacity: 0}
+            50% {opacity: 1}
+            100%{opacity: 0}
+        }
+        .loading-container,
+        .loading {
+            height: 100px;
+            position: relative;
+            width: 100px;
+            border-radius: 100%;
+        }
+
+        .loading-container { margin: 40px auto }
+
+        .loading {
+            border: 2px solid transparent;
+            border-color: transparent black transparent black;
+            -moz-animation: rotate-loading 1.5s linear 0s infinite normal;
+            -moz-transform-origin: 50% 50%;
+            -o-animation: rotate-loading 1.5s linear 0s infinite normal;
+            -o-transform-origin: 50% 50%;
+            -webkit-animation: rotate-loading 1.5s linear 0s infinite normal;
+            -webkit-transform-origin: 50% 50%;
+            animation: rotate-loading 1.5s linear 0s infinite normal;
+            transform-origin: 50% 50%;
+        }
+
+        .loading-container:hover .loading {
+            border-color: transparent black transparent black;
+        }
+        
+        .loading-container:hover .loading,
+        .loading-container .loading {
+            -webkit-transition: all 0.5s ease-in-out;
+            -moz-transition: all 0.5s ease-in-out;
+            -ms-transition: all 0.5s ease-in-out;
+            -o-transition: all 0.5s ease-in-out;
+            transition: all 0.5s ease-in-out;
+        }
+
+        #loading-text {
+            -moz-animation: loading-text-opacity 2s linear 0s infinite normal;
+            -o-animation: loading-text-opacity 2s linear 0s infinite normal;
+            -webkit-animation: loading-text-opacity 2s linear 0s infinite normal;
+            animation: loading-text-opacity 2s linear 0s infinite normal;
+            color: #000000;
+            font-family: "Helvetica Neue, "Helvetica", ""arial";
+            font-size: 10px;
+            font-weight: bold;
+            margin-top: 45px;
+            opacity: 0;
+            position: absolute;
+            text-align: center;
+            text-transform: uppercase;
+            top: 0;
+            width: 100px;
+        }
+        
+         
+/** ------------------------------------- main CSS -------------------------------------- **/
+       .custom-navbar {
+            background-color: #d2e8ff;
+        }
+           #mainTitle{
+            text-align: center;
+            position: relative;
+            top: 45%;
+            transform: translateY(-50%);
+            left: 30px;  /* 좌측으로 50px 이동 */
+            font-family: 'JalnanGothic', sans-serif;
+            font-size: 50px;
+        }
+         
+         #sub {
+            text-align: center;
+            position: relative;
+            top: 45%;
+            transform: translateY(-50%);
+            left: 30px;  /* 좌측으로 50px 이동 */
+            font-family: 'JalnanGothic', sans-serif;
+             margin-top:-70px;
+        }
+     
+       @font-face {
+       font-family: 'NPSfontBold';
+       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2') format('woff2');
+       font-weight: 700;
+       font-style: normal;
+      }
+       
+/* -------------------------------------------글쓰기  --> 게시판 ------------------------------- */
+.mainregister{
+  -ms-flex: 85%; /* IE10 */
+  flex: 85%;
+  background-color: white;
+  padding: 30px;
+  margin-bottom: 100px;
+  margin-top: 50px;
+}
+
+.box-title{
+font-weight : bold;   
+}
+  
+/*  링크       */
+ a{
+   color:black;
+}
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
+}
+
+
+/*---------------------------------------------partnerList----------------------------------*/
+#pWrite{
+	margin-top:25px;
+	margin-right:90px;
+	float:right;
+	border: 2px solid #3E86F5;
+	border-radius: 15px;
+	padding:5px;
+}
+
+#pWrite a{
+	 color:black;
+	 text-decoration: none;
+	 font-weight: bold;
+}
+
+#partnermain{
+	display: flex;
+    align-items: center;
+    justify-content: flex-start; /*또는 필요에 따라 다른 값으로 설정*/
+    flex-wrap: wrap; /*요소가 넘칠 경우 다음 줄로 넘어가도록 설정*/
+    overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+    #partnermain2 {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 800px) {
+    #partnermain2 {
+        width: 100%;
+    }
+}
+
+#partnermain2{
+	transition: transform 0.3s ease;
+}
+
+#partnermain2:hover {
+    transform: scale(1.03); /* 마우스를 올렸을 때 크기를 1.1배로 확대 */
+}
+
+#p-div {
+	border: 3px solid #ddd;
+	border-collapse: collapse;
+	width: 350px;
+	height: 400px;
+	margin: 15px;
+	border-radius: 35px;
+	padding: 30px;
+}
+
+
+#p-div span{
+	float: right; /* 요소를 오른쪽으로 띄움 */
+    margin-left: 10px;
+}
+
+#p-div-hidden {
+	border: none;
+	border-collapse: collapse;
+	width: 350px;
+	height: 400px;
+	margin: 15px;
+	border-radius: 35px;
+	padding: 30px;
+}
+#endDateH {
+	color: grey;
+}
+
+#p-title {
+   font-size: 21px;
+   font-weight: bold;
+   width:300px;
+   height:60px;
+    overflow: hidden; /* 넘치는 부분을 숨김 */
+    text-overflow: ellipsis;
+}
+
+#p-username{
+   width:100px;
+   float:left; 
+   overflow: hidden; 
+   text-overflow: ellipsis;
+}
+
+#hihi {
+	display: inline-block;
+	margin: 10px;
+	padding: 8px;
+	border: 1px solid #F2F4F8;
+	border-collapse: collapse;
+	border-radius: 25px;
+	color: #3E86F5;
+	background-color: #F2F4F8;
+	font-weight: bold;
+	font-size:15px;
+}
+
+#header1 {
+	display: inline-block;
+	margin: 10px;
+	padding: 5px;
+	color: #656565;
+	background-color: #EFEFEF;
+	font-weight: bold;
+	font-size:15px;
+	border-radius: 25px;
+}
+
+#header2 {
+	display: inline-block;
+	margin: 10px;
+	padding: 5px;
+	color: #FDB900;
+	background-color: #FFF9D7;
+	font-weight: bold;
+	border-radius: 25px;
+}
+
+#p-hr {
+	border: 1px solid #ddd;
+}
+
+/*-------------------------------------------partnerInsert-------------------------------*/
+#pInsert{
+   padding: 50px;
+   margin: 50px;
+   border: 1px solid #ddd;
+   border-radius: 25px;
+}
+
+#infoInput{
+   width: 500px;   
+}
+
+/*기술 스택 버튼*/
+#showStackButton{
+	border-radius: 25px;
+	border: 1px solid #ddd;
+	background-color: white;
+	padding: 10px;
+	width: 150px;
+	margin-left:100px;
+	margin-bottom:10px;	
+}
+
+.languages{	
+	position: absolute;
+	display: none;
+	border: 1px solid #ddd;
+	background-color: white;
+	border-radius: 35px;
+	padding: 5px;
+	height:160px;
+	margin-left:90px;
+	margin-right:90px;
+	z-index:1000;
+}
+
+.languages li{
+	list-style:none;
+	float: left;
+	margin:5px;
+	border: 1px solid #ddd;
+	border-radius: 40px;
+	padding: 5px;
+	cursor:pointer;
+}
+
+.languages img{
+	width: 50px;
+}
+
+/*----------------------------------------포지션, 진행 방식 버튼----------------------------------*/
+#showPositonButton, #showProgressButton{
+	border-radius: 25px;
+	border: 1px solid #ddd;
+	background-color: white;
+	padding: 10px;
+	width: 150px;
+	margin-left:10px;
+	margin-bottom:10px;
+}
+
+.position{
+	position: absolute;
+	display: none;
+	border: 1px solid #ddd;
+	border-radius: 35px;
+	padding: 5px;
+	background-color: white;
+	margin-left:250px;
+	width:180px;
+	z-index:999;
+}
+
+.pProgress{	
+	position: absolute;
+	display: none;
+	border: 1px solid #ddd;
+	background-color: white;
+	border-radius: 35px;
+	padding: 5px;
+	margin-left:415px;
+	width: 180px;
+    z-index:998;
+}
+
+.position li{
+	list-style:none;
+	margin:5px;
+	padding: 5px;
+	cursor:pointer;
+}
+
+.pProgress li{
+	list-style:none;
+	margin:5px;
+	padding: 5px;
+	cursor:pointer;
+}
+
+
+/*----------------------------------------readPartner css------------------------------------------*/
+.sideMain{
+	background-color:#eaedf4; 
+	min-height: 100vh;
+   	display: flex;
+    justify-content: center;
+}
+.readMain{
+	border-radius: 25px;
+	margin:150px;
+	padding:50px 100px;
+	background-color:white;
+}
+
+.backList, .upPartner, .delPartner{
+   border:none;
+   backgroud-color: white;	
+}
+
+.rContent{
+	margin-bottom:100px;
+	font-size:23px;
+	white-space:pre-line;
+}
+
+.rCategory{
+   color: lightslategray;
+   
+}
+
+.partnerTable{
+	margin-top:50px;
+	margin-bottom:100px;
+}
+
+#readButton, .btn-submit, .btn-cancle{
+	color:black;
+	border: 2px solid #3E86F5;
+	border-radius: 15px;
+	padding:5px;
+	width:70px;
+	transition: background-color 0.3s, color 0.3s;
+	
+	 /* 호버 효과 */
+    &:hover {
+        background-color: #3E86F5;
+        color: white;
+    }
+}
+
+.gap {
+    margin-right: 100px; /* 여러 값으로 조절하여 간격을 조정할 수 있습니다. */
+    width:150px;
+}
+
+.backList, .upPartner, .delPartner, .backList img, .upPartner img, .delPartner img{
+	background-color: white;
+	width: 30px;
+}
+
+/*------------------------------- insertPartner css------------------------------- */
+
+/*기본정보 테이블*/
+#infoInput{
+	border: none;
+	width: 100%;
+}
+
+.updateMain{
+	border-radius: 25px;
+	margin:150px;
+	padding:10px;
+	background-color:white;
+}
+
+#infoInput th, td{
+	padding : 15px;
+	font-size:22px;
+}
+
+/*포지션, 진행 방식 버튼2*/
+#progress, #pPosition, #stack{
+	border-radius: 10px;
+	border: 1px solid #ddd;
+	background-color: white;
+	padding: 10px;
+	padding-right: 30px;
+	width: 150px;
+	margin-left:10px;
+	margin-bottom:10px;
+	text-align:center;
+	font-size:15px;
+}
+
+#infoInput input{
+	border: 1px solid #ddd;
+	border-radius: 10px;
+	text-align:center;
+}
+
+/*----------------------------희주------------- hire css----------------------------------- */
+
+.hiremain {
+   border: 1px solid #5189fa;
+   border-collapse: collapse;
+   width: 400px;
+   height: 225px;
+   margin: 10px;
+   border-radius: 35px;
+   padding: 20px;
+   transition: transform 0.3s ease;
+}
+
+.hiremain:hover {
+   transform: scale(1.03); /* 마우스를 올렸을 때 크기를 1.1배로 확대 */
+}
+
+.hire-image{
+   width:110px;
+   height:40px;
+   margin-bottom:3px;
+}
+
+.h-endDate {
+   color: grey;
+   text-align: right;
+}
+
+.h-info {
+   color: grey;
+   margin: 2px;
+   white-space: nowrap; /* 텍스트가 한 줄로만 표시되도록 설정 */
+   overflow: hidden; /* 넘치는 부분을 감추기 */
+   text-overflow: ellipsis;/* 넘치는 부분에 ... 표시 */
+}
+.h-title {
+   font-size: 18px;
+   font-weight: bold;
+   margin: 2px;
+   white-space: nowrap; /* 텍스트가 한 줄로만 표시되도록 설정 */
+   overflow: hidden; /* 넘치는 부분을 감추기 */
+   text-overflow: ellipsis;/* 넘치는 부분에 ... 표시 */
+}
+.h-Name {
+   margin-bottom: 12px;
+   white-space: nowrap; /* 텍스트가 한 줄로만 표시되도록 설정 */
+   overflow: hidden; /* 넘치는 부분을 감추기 */
+   text-overflow: ellipsis; /* 넘치는 부분에 ... 표시 */
+}
+.star {
+  font-size: 20px;
+  font-weight: bold;
+  color: black;
+  transition: color 0.3s ease;
+  cursor: pointer;
+}
+.star:hover {
+   color: orange;
+}
+.star.active {
+  color: orange;
+}
+#h-arrow{
+   height:40px;
+   margin-top:50px;
+   margin-right:1000px;
+   transition: transform 0.3s ease;
+}
+
+#h-arrow:hover {
+   transform: scale(1.3);
+}
+
+/* readHire */
+.hire-main {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   margin: 20px 0px;
+   padding: 10px 80px;
+   background-color: white;
+}
+
+.mainHire {
+   background-color: #eaedf4;
+   display: flex;
+   justify-content: center;
+}
+
+
+.information {
+   float: left;
+   padding: 20px 0;
+   width: 420px;
+   border-top: 1px solid #e5e6eb;
+   border-bottom: 1px solid #e5e6eb;
+   font-size: 16px;
+   letter-spacing: -0.5px;
+   margin-right: 35px;
+}
+
+.information dl {
+   display: flex;
+   margin: 8px;
+   /*     margin-bottom: 15px; */
+   /*     margin-top: 15px; */
+   /*     justify-content: space-between; */
+   /*     align-items: center; */
+}
+
+.information dt {
+   width: 86px;
+   text-align: left;
+}
+
+
+
+.information dd {
+   width: calc(100% - 86px);
+   text-align: left;
+}
+
+/*로그인*/
+
+.h-login{
+	text-align:center; 
+	display:flex;
+	justify-content: center;
+}

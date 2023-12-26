@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.human.dao.StudyDao">
+
+	<insert id="create">insert into study (sId, sGroupKind, sTitle, sContent,
+		sName, sGroup)
+		values (sId.nextval,#{sGroupKind},#{sTitle},#{sContent},
+		#{sName}, sId.nextval)
+	</insert>
+
+	<!-- 답글 작성 -->
+<!-- 	update 된 다음에 insert가 돼야함 -->
+		<update id="replyStep">
+		update study set sStep=sStep+1 where sGroup=#{sGroup}
+		and sStep>#{sStep}
+	</update>
+	
+	
+	<insert id="replyCreate">
+		insert into study(sGroupKind, sId, sName, sTitle,
+		sContent, sGroup, sStep, sIndent)
+		values
+		((select sGroupKind from study where sId=#{sId}), sId.nextval, #{sName},
+		#{sTitle}, #{sContent},
+		(select sGroup from study where sId=#{sId}), #{sStep}, #{sIndent})
+	</insert>
+
+	<!-- 답글 달기 전 부모의 step보다 높은 글들의 step 하나씩 증가시킴(중간에 답글을 삽입하기 위함) -->
+
+
+
+	<select id="read" resultType="StudyDto">
+		select * from study where sId =
+		#{sId}
+	</select>
+
+	<update id="update">
+		update study set
+		sTitle=#{sTitle},sContent=#{sContent}, sUpdateTime=#{sUpdateTime}
+		where sId=#{sId}
+	</update>
+
+	<delete id="delete"> delete from study where sId = #{sId} </delete>
+
+	<select id="listAll" resultType="com.human.dto.StudyDto">
+		<![CDATA[ select * from study where sId > 0 order by sGroup desc, sStep asc ]]>
+	</select>
+
+	<update id="increaseViewCount">
+		update study set sHit = sHit + 1 where sId = #{sId}
+	</update>
+
+	<update id="sLike">
+		update study set sLike = sLike + 1 where sId = #{sId}
+	</update>
+
+	<select id="listMenu" resultType="com.human.dto.StudyDto">
+		<![CDATA[ select * from study where sGroupKind = #{sGroupKind} order by sGroup desc, sStep asc]]>
+		
+	</select> 
+	
+	<select id="countBoard" parameterType="String" resultType="int">
+  		SELECT COUNT(*) FROM study WHERE sGroupKind = #{sGroupKind}
+	</select>
+
+	<select id="menuKind" resultType="String">
+   		<![CDATA[ select distinct sGroupKind from study order by sGroupKind ]]>
+	</select>
+<!-- 검색 -->
+	<sql id='search'>
+		<if test="searchType!=null">
+			<if test="searchType == '게시판'.toString()"> and sGroupKind like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '제목'.toString()"> and sTitle like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '내용'.toString()"> and sContent like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '작성자'.toString()"> and sName like '%'|| #{keyword}||'%' </if>
+			<if test="searchType == '제목 +내용'.toString()"> and ( sTitle like '%'|| #{keyword}||'%' OR sContent like
+				'%'|| #{keyword}||'%') </if>
+			<if test="searchType == '내용+작성자'.toString()"> and ( sContent like '%'|| #{keyword}||'%' OR sName like
+				'%'|| #{keyword}||'%') </if>
+			<if test="searchType == '제목+내용+작성자'.toString()"> and ( sTitle like '%'|| #{keyword}||'%' OR sContent like
+				'%'|| #{keyword}||'%' OR sName like '%'|| #{keyword}||'%') </if>
+		</if>
+	</sql>
+	<!-- 페이징서치 pageList -->
+<select id="listSearch" resultType="StudyDto">
+   <![CDATA[select * from study where 1=1 ]]>
+   <include refid="search"/>
+   <![CDATA[
+      and sDelete='Y' 
+      order by sGroup desc, sStep asc 
+      offset (#{page}-1)*#{perPageNum} rows fetch next #{perPageNum} rows only
+   ]]>
+</select>
+
+	
+<!-- <select id="listSearch" resultType="com.human.dto.BoardDto"> -->
+<!-- 	<![CDATA[SELECT * FROM (SELECT board.*, ROW_NUMBER() OVER ( and bDelete='N' ORDER by bGroup desc,bStep asc) AS rn FROM board WHERE 1=1]]> -->
+<!--  include 는 refid 옆에 입력한 search를 찾아간다 위에 sql id='search'로 찾아간다. 이거 주석임 -->
+<!--       <include refid="search" /> -->
+<!-- 	<![CDATA[ -->
+	
+<!-- 	 )WHERE rn BETWEEN ((#{page} - 1) * #{perPageNum}) + 1 AND #{page}* #{perPageNum}]]> -->
+<!--   </select> -->
+
+
+  <select id="listSearchCount" resultType="int">
+    <![CDATA[ select count(sId) from study where 1=1 ]]>
+      <include refid="search" />
+    <![CDATA[and sDelete='Y']]>
+  </select>
+
+
+<!-- 카테고리 페이징 처리 cateList -->	
+<select id="sGroupKindSearch" resultType="StudyDto">
+  <![CDATA[select * from study where 1=1 ]]>
+   <include refid="search"/>
+   <![CDATA[
+      and sGroupKind=#{sGroupKind} 
+      and sDelete='Y' 
+      order by sGroup desc, sStep asc 
+      offset (#{page}-1)*#{perPageNum} rows fetch next #{perPageNum} rows only
+   ]]>
+</select>
+
+  <select id="sGroupKindSearchCount" resultType="int">
+    <![CDATA[ select count(sId) from study where 1=1 ]]>
+      <include refid="search" />
+    <![CDATA[and sGroupKind=#{sGroupKind} and sDelete='Y']]>
+  </select>
+
+<select id="category" resultType="String">
+select distinct sGroupKind from study
+</select>
+</mapper>
